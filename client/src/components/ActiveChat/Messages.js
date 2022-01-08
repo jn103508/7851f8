@@ -5,10 +5,11 @@ import moment from "moment";
 
 const Messages = (props) => {
   const { messages, otherUser, userId } = props;
+  const reverseMessages = [...messages]; // copied messages to reverse order of chat when mapping
 
   return (
     <Box>
-      {messages.map((message) => {
+      {reverseMessages.reverse().map((message) => {
         const time = moment(message.createdAt).format("h:mm");
 
         return message.senderId === userId ? (
