@@ -72,6 +72,9 @@ export const logout = (id) => async (dispatch) => {
 export const fetchConversations = () => async (dispatch) => {
   try {
     const { data } = await axios.get("/api/conversations");
+    data.map(convo => {
+      convo.messages = convo.messages.reverse();
+    });
     dispatch(gotConversations(data));
   } catch (error) {
     console.error(error);
@@ -95,7 +98,7 @@ const sendMessage = (data, body) => {
 // conversationId will be set to null if its a brand new conversation
 export const postMessage = (body) => async (dispatch) => {
   try {
-    const data = await saveMessage(body); // added async await because conversationId was null (error in logs)
+    const data = await saveMessage(body); 
     if (!body.conversationId) {
       dispatch(addConversation(body.recipientId, data.message));
     } else {
@@ -115,3 +118,4 @@ export const searchUsers = (searchTerm) => async (dispatch) => {
     console.error(error);
   }
 };
+
