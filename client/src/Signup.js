@@ -14,185 +14,24 @@ import { makeStyles } from "@material-ui/core/styles";
 import { register } from "./store/utils/thunkCreators";
 import bgImg from "./images/bg-img.png";
 import bubble from "./images/bubble.svg";
+import {useStyles as useSharedStyles} from "./Login";
 
 const useStyles = makeStyles(() => ({
-  '@global': {
-    body: {
-      backgroundColor: "#f0f0f0"
-    }
-  },
-  root: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "1150px",
-    height: "800px",
+  topBtn: {
     backgroundColor: "white",
-    boxShadow: "0 0 8px 2px rgba(0,0,0,0.2)",
-    borderRadius: "4px",
-    '@media (max-width:1200px)': {
-      width: "980px",
-      height: "700px"
-    },
-    '@media (max-width:1000px)': {
-      width: "870px",
-      height: "600px"
-    },
-    '@media (max-width:900px)': {
-      width: "704px",
-      height: "450px"
-    },
-    '@media (max-width:720px)': {
-      flexDirection: "column-reverse",
-      height: "882px",
-      width: "375px",
-      overflow: "hidden",
-      top: "0",
-      left: "50%",
-      transform: "translate(-50%, 0%)",
-    },
-    '@media (max-width:480px)': {
-      width: "100vw",
-      borderRadius: "0"
-    }
-  },
-  bgImg: {
-    height: "800px",
-    borderRadius: "4px 0 0 4px",
-    opacity: "0.2",
-    '@media (max-width:1200px)': {
-      height: "700px"
-    },
-    '@media (max-width:1000px)': {
-      height: "600px"
-    },
-    '@media (max-width:900px)': {
-      height: "450px"
-    },
-    '@media (max-width:720px)': {
-      height: "618px",
-      borderRadius: "0 0 4px 4px"
-    },
-    '@media (max-width:480px)': {
-      width: "100vw",
-      height: "auto",
-      borderRadius: "0"
-    }
-  },
-  colorFilter: {
-    position: "relative",
-    backgroundImage: "linear-gradient(#1976d2, #9bc0ff)",
-    height: "800px",
-    borderRadius: "4px 0 0 4px",
-    '@media (max-width:1200px)': {
-      height: "700px"
-    },
-    '@media (max-width:1000px)': {
-      height: "600px"
-    },
-    '@media (max-width:900px)': {
-      height: "450px"
-    },
-    '@media (max-width:720px)': {
-      width: "375px",
-      borderRadius: "0 0 4px 4px"
-    },
-    '@media (max-width:480px)': {
-      width: "100vw",
-      borderRadius: "0"
-    }
-  },
-  sloganContainer: {
-    position: "absolute",
-    top: "29%",
-    width: "100%",
-    textAlign: "center"
-  },
-  bubbleImg: {
-    zIndex: "10",
-    '@media (max-width:900px)': {
-      width: "50px"
-    }
-  },
-  slogan: {
-    marginTop: "40px",
-    color: "white",
-    fontSize: "1.7rem",
-    '@media (max-width:900px)': {
-      marginTop: "20px",
-      fontSize: "1.2rem"
-    }
-  },
-  registerContainer: {
-    width: "660px",
-    '@media (max-width:1200px)': {
-      width: "550px"
-    },
-    '@media (max-width:1000px)': {
-      width: "500px"
-    },
-    '@media (max-width:900px)': {
-      width: "430px"
-    },
-    '@media (max-width:720px)': {
-      width: "375px"
-    },
-    '@media (max-width:480px)': {
-      width: "100vw"
-    }
-  },
-  loginContainer: {
-    alignItems: "center",
-    color: "lightgrey",
-    padding: "2rem 3rem",
-    justifyContent: "flex-end",
-    '@media (max-width:1000px)': {
-      padding: "1rem 2rem"
-    },
-    '@media (max-width:900px)': {
-      padding: ".6rem 1.2rem"
-    },
-    '@media (max-width:720px)': {
-      padding: "0.7rem 1.8rem"
-    }
-  },
-  loginHeader: {
-    color: "#a6a6a6",
-    fontSize: "15px",
-    '@media (max-width:480px)': {
-      fontSize: "12px"
-    },
-    '@media (max-width:320px)': {
-      display: "none"
-    }
-  },
-  loginBtn: {
-    backgroundColor: "white",
+    boxShadow: "0px 4px 6px rgba(20,20,150,.1)",
     color: "#2196f3",
-    padding: "16px 50px",
-    marginLeft: "7%",
+    padding: "16px 52px",
+    marginLeft: "5%",
     '&:hover': {
       backgroundColor: "#f7f7f7"
-    },
-    '@media (max-width:900px)': {
-      padding: "8px 25px"
     }
   },
-  registerHeaderContainer: {
-    width: "70%",
-    display: "flex",
-    justifyContent: "left",
-    marginBottom: "7px",
-  },
-  registerHeader: {
+  header: {
     fontWeight: "bold",
     fontSize: "2em",
-    '@media (max-width:900px)': {
-      fontSize: "1.5em"
-    },
-    '@media (max-width:720px)': {
-      fontSize: "1.3em"
+    '@media (max-width:420px)': {
+      fontSize: "1.6em"
     }
   },
   form: {
@@ -200,82 +39,37 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     flexDirection: "column",
     alignItems: "center",
-    marginTop: "45px",
-    '@media (max-width: 1200px)': {
-      marginTop: "11px"
+    marginTop: 55,
+    '@media (max-height:820px)': {
+      marginTop: 20
     },
-    '@media (max-width:1000px)': {
-      marginTop: "0px"
-    },
-  },
-  inputContainer: {
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "column",
-    width: "70%"
-  },
-  inputItemContainer: {
-    width: "100%"
+    '@media (max-height:720px)': {
+      marginTop: 0
+    }
   },
   textField: {
     width: "100%",
-    margin: "26px 0",
+    margin: "30px 0",
     "& .MuiFormLabel-root": {
       padding: "0px 4px",
-      fontSize: "16px",
+      fontSize: 16,
       color: "#a6a6a6"
     },
     "& .MuiInput-underline:before": {
       borderBottom: "1px solid #d6d6d6"
     },
     "& .MuiInputLabel-shrink": {
-      transform: "translate(0, -13px) scale(1)"
+      transform: "translate(0, -15px) scale(1)"
     },
-    '@media (max-width:1000px)': {
-      margin: "20px 0",
-      "& .MuiInputLabel-shrink": {
-        transform: "translate(0, -4px) scale(1)"
-      },
-    },
-    '@media (max-width:900px)': {
-      margin: "12px 0",
-      "& .MuiInputLabel-shrink": {
-        transform: "translate(0, 1px) scale(1)"
-      },
-      "& .MuiFormLabel-root": {
-        fontSize: "14px",
-      },
-    },
-    '@media (max-width:720px)': {
-      margin: "9px 0"
-    }
-  },
-  textInput: {
-    padding: "8px 4px",
-    fontSize: "16px",
-    '@media (max-width: 900px)': {
-      fontSize: "14px"
-    }
-  },
-  passwordInput: {
-    padding: "0px 4px",
-    fontSize: "30px",
-    '@media (max-width: 900px)': {
-      fontSize: "24px"
-    }
-  },
-  createBtn: {
-    margin: "20px auto",
-    padding: "14px 72px",
-    '@media (max-width:900px)': {
-      padding: "8px 41px",
-      margin: "5px auto"
+    '@media (max-height:820px)': {
+      margin: "20px 0"
     }
   }
 }));
 
 const Login = (props) => {
   const classes = useStyles();
+  const sharedClass = useSharedStyles();
   const history = useHistory();
   const { user, register } = props;
   const [formErrorMessage, setFormErrorMessage] = useState({});
@@ -300,19 +94,19 @@ const Login = (props) => {
   }
 
   return (
-    <Grid className={classes.root} container justify="space-between">
-      <Box className={classes.colorFilter}>
-        <img className={classes.bgImg} src={bgImg} alt="backgroundImage"></img>
-        <div className={classes.sloganContainer}>
-          <img className={classes.bubbleImg} src={bubble} alt="bubbleImage"></img>
-          <Typography className={classes.slogan}>Converse with anyone<br></br> with any language</Typography> 
+    <Grid className={sharedClass.root} container justify="space-between">
+      <Box className={sharedClass.colorFilter}>
+        <img className={sharedClass.bgImg} src={bgImg} alt="backgroundImage" />
+        <div className={sharedClass.sloganContainer}>
+          <img className={sharedClass.bubbleImg} src={bubble} alt="bubbleImage" />
+          <Typography className={sharedClass.slogan}>Converse with anyone<br></br> with any language</Typography> 
         </div>
       </Box>
-      <Box className={classes.registerContainer}>
-        <Grid container item className={classes.loginContainer}>
-          <Typography className={classes.loginHeader}>Already have an account?</Typography>
+      <Box className={sharedClass.mainContainer}>
+        <Grid container item className={sharedClass.topContainer}>
+          <Typography className={sharedClass.topHeader}>Already have an account?</Typography>
           <Button 
-            className={classes.loginBtn} 
+            className={classes.topBtn} 
             variant="contained" 
             onClick={() => history.push("/login")}
             >
@@ -320,16 +114,16 @@ const Login = (props) => {
           </Button>
         </Grid>
         <form className={classes.form} onSubmit={handleRegister}>
-          <Typography className={classes.registerHeaderContainer}><Typography className={classes.registerHeader} component="span">Create an account.</Typography></Typography>
-          <Grid className={classes.inputContainer}>
-            <Grid className={classes.inputItemContainer}>
-              <FormControl className={classes.inputItemContainer}>
+          <Typography className={sharedClass.headerContainer}><Typography className={classes.header} component="span">Create an account.</Typography></Typography>
+          <Grid className={sharedClass.inputContainer}>
+            <Grid className={sharedClass.inputItemContainer}>
+              <FormControl className={sharedClass.inputItemContainer}>
                 <TextField
                   InputLabelProps={{ required: false }}
                   className={classes.textField}
                   InputProps={{
                     classes: {
-                      input: classes.textInput,
+                      input: sharedClass.textInput,
                     },
                   }}
                   aria-label="username"
@@ -340,14 +134,14 @@ const Login = (props) => {
                 />
               </FormControl>
             </Grid>
-            <Grid className={classes.inputItemContainer}>
-              <FormControl className={classes.inputItemContainer}>
+            <Grid className={sharedClass.inputItemContainer}>
+              <FormControl className={sharedClass.inputItemContainer}>
                 <TextField
                   InputLabelProps={{ required: false }}
                   className={classes.textField}
                   InputProps={{
                     classes: {
-                      input: classes.textInput,
+                      input: sharedClass.textInput,
                     },
                   }}
                   label="E-mail address"
@@ -358,14 +152,14 @@ const Login = (props) => {
                 />
               </FormControl>
             </Grid>
-            <Grid className={classes.inputItemContainer}>
-              <FormControl className={classes.inputItemContainer} error={!!formErrorMessage.confirmPassword}>
+            <Grid className={sharedClass.inputItemContainer}>
+              <FormControl className={sharedClass.inputItemContainer} error={!!formErrorMessage.confirmPassword}>
                 <TextField
                   InputLabelProps={{ required: false }}
                   className={classes.textField}
                   InputProps={{
                     classes: {
-                      input: classes.passwordInput,
+                      input: sharedClass.passwordInput,
                     },
                   }}
                   aria-label="password"
@@ -380,14 +174,14 @@ const Login = (props) => {
                 </FormHelperText>
               </FormControl>
             </Grid>
-            <Grid className={classes.inputItemContainer}>
-              <FormControl className={classes.inputItemContainer} error={!!formErrorMessage.confirmPassword}>
+            <Grid className={sharedClass.inputItemContainer}>
+              <FormControl className={sharedClass.inputItemContainer} error={!!formErrorMessage.confirmPassword}>
                 <TextField
                   InputLabelProps={{ required: false }}
                   className={classes.textField}
                   InputProps={{
                     classes: {
-                      input: classes.passwordInput,
+                      input: sharedClass.passwordInput,
                     },
                   }}
                   label="Confirm Password"
@@ -402,7 +196,7 @@ const Login = (props) => {
                 </FormHelperText>
               </FormControl>
             </Grid>
-            <Button className={classes.createBtn} color="primary" type="submit" variant="contained" size="large">
+            <Button className={sharedClass.submitBtn} color="primary" type="submit" variant="contained" size="large">
               Create
             </Button>
           </Grid>
