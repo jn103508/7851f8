@@ -15,92 +15,28 @@ import { login } from "./store/utils/thunkCreators";
 import bgImg from "./images/bg-img.png";
 import bubble from "./images/bubble.svg";
 
-const useStyles = makeStyles(() => ({
-  '@global': {
-    body: {
-      backgroundColor: "#f0f0f0"
-    }
-  },
+export const useStyles = makeStyles(() => ({
   root: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "1150px",
-    height: "800px",
-    backgroundColor: "white",
-    boxShadow: "0 0 8px 2px rgba(0,0,0,0.2)",
-    borderRadius: "4px",
-    '@media (max-width:1200px)': {
-      width: "980px",
-      height: "700px"
-    },
-    '@media (max-width:1000px)': {
-      width: "870px",
-      height: "600px"
-    },
-    '@media (max-width:900px)': {
-      width: "704px",
-      height: "450px"
-    },
-    '@media (max-width:720px)': {
-      flexDirection: "column-reverse",
-      height: "882px",
-      width: "375px",
-      overflow: "hidden",
-      top: "0",
-      left: "50%",
-      transform: "translate(-50%, 0%)",
-    },
-    '@media (max-width:480px)': {
-      width: "100vw",
-      borderRadius: "0"
-    }
+    display: "flex",
+    flexDirection: "row",
+    width: "100vw",
+    height: "100vh",
+    backgroundColor: "white"
   },
   bgImg: {
-    height: "800px",
-    borderRadius: "4px 0 0 4px",
-    opacity: "0.2",
-    '@media (max-width:1200px)': {
-      height: "700px"
-    },
+    height: "100%",
+    width: "auto",
+    opacity: .2,
     '@media (max-width:1000px)': {
-      height: "600px"
-    },
-    '@media (max-width:900px)': {
-      height: "450px"
-    },
-    '@media (max-width:720px)': {
-      height: "618px",
-      borderRadius: "0 0 4px 4px"
-    },
-    '@media (max-width:480px)': {
-      width: "100vw",
-      height: "auto",
-      borderRadius: "0"
+      display: "none",
     }
   },
   colorFilter: {
     position: "relative",
     backgroundImage: "linear-gradient(#1976d2, #9bc0ff)",
-    height: "800px",
-    borderRadius: "4px 0 0 4px",
-    '@media (max-width:1200px)': {
-      height: "700px"
-    },
+    height: "100%",
     '@media (max-width:1000px)': {
-      height: "600px"
-    },
-    '@media (max-width:900px)': {
-      height: "450px"
-    },
-    '@media (max-width:720px)': {
-      width: "375px",
-      borderRadius: "0 0 4px 4px"
-    },
-    '@media (max-width:480px)': {
-      width: "100vw",
-      borderRadius: "0"
+      display: "none"
     }
   },
   sloganContainer: {
@@ -110,89 +46,55 @@ const useStyles = makeStyles(() => ({
     textAlign: "center"
   },
   bubbleImg: {
-    zIndex: "10",
-    '@media (max-width:900px)': {
-      width: "50px"
-    }
+    zIndex: 10,
+    width: 100,
   },
   slogan: {
-    marginTop: "40px",
+    marginTop: 40,
     color: "white",
-    fontSize: "1.7rem",
-    '@media (max-width:900px)': {
-      marginTop: "20px",
-      fontSize: "1.2rem"
-    }
+    fontSize: 32,
   },
-  loginContainer: {
-    width: "660px",
-    '@media (max-width:1200px)': {
-      width: "550px"
-    },
+  mainContainer: {
+    width: "calc(100% - 100vh/1.647)",
     '@media (max-width:1000px)': {
-      width: "500px"
-    },
-    '@media (max-width:900px)': {
-      width: "430px"
-    },
-    '@media (max-width:720px)': {
-      width: "375px"
-    },
-    '@media (max-width:480px)': {
+      margin: "0 auto",
       width: "100vw"
     }
   },
-  registerContainer: {
+  topContainer: {
     alignItems: "center",
-    color: "lightgrey",
-    padding: "2rem 3rem",
-    justifyContent: "flex-end",
-    '@media (max-width:900px)': {
-      padding: "1rem 2rem"
-    },
-    '@media (max-width:720px)': {
-      padding: "0.7rem 1.8rem"
-    }
+    padding: "40px 50px",
+    justifyContent: "flex-end"
   },
-  registerHeader: {
+  topHeader: {
     color: "#a6a6a6",
-    fontSize: "15px",
-    '@media (max-width:720px)': {
-      fontSize: "13px"
-    },
+    fontSize: 15,
+    padding: 10,
     '@media (max-width:480px)': {
-      fontSize: "12px"
-    },
-    '@media (max-width:320px)': {
       display: "none"
     }
   },
-  registerBtn: {
+  topBtn: {
     backgroundColor: "white",
+    boxShadow: "0px 4px 6px rgba(20,20,150,.1)",
     color: "#2196f3",
     padding: "16px 38px",
-    marginLeft: "7%",
+    marginLeft: "5%",
     '&:hover': {
       backgroundColor: "#f7f7f7"
     },
-    '@media (max-width:900px)': {
-      padding: "8px 19px"
-    }
   },
-  loginHeaderContainer: {
+  headerContainer: {
     width: "70%",
     display: "flex",
     justifyContent: "left",
-    marginBottom: "10px"
+    marginBottom: 10
   },
-  loginHeader: {
+  header: {
     fontWeight: "bold",
     fontSize: "2em",
-    '@media (max-width:900px)': {
-      fontSize: "1.5em"
-    },
-    '@media (max-width:720px)': {
-      fontSize: "1.3em"
+    '@media (max-width:360px)': {
+      fontSize: "1.7em"
     }
   },
   form: {
@@ -200,15 +102,12 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     flexDirection: "column",
     alignItems: "center",
-    marginTop: "55px",
-    '@media (max-width: 1200px)': {
-      marginTop: "30px"
+    marginTop: 55,
+    '@media (max-height:720px)': {
+      marginTop: 30
     },
-    '@media (max-width:1000px)': {
-      marginTop: "10px"
-    },
-    '@media (max-width:900px)': {
-      marginTop: "0px"
+    '@media (max-height:600px)': {
+      marginTop: 10
     }
   },
   inputContainer: {
@@ -222,7 +121,7 @@ const useStyles = makeStyles(() => ({
   },
   textField: {
     width: "100%",
-    margin: "40px 0",
+    margin: "60px 0",
     "& .MuiFormLabel-root": {
       padding: "0px 4px",
       fontSize: "16px",
@@ -232,26 +131,25 @@ const useStyles = makeStyles(() => ({
       borderBottom: "1px solid #d6d6d6"
     },
     "& .MuiInputLabel-shrink": {
-      transform: "translate(0, -15px) scale(1)"
+      transform: "translate(0, -30px) scale(1)"
     },
-    '@media (max-width:900px)': {
-      margin: "30px 0"
+    '@media (max-height:720px)': {
+      margin: "40px 0"
     }
   },
   textInput: {
     padding: "8px 4px",
-    fontSize: "16px",
-    '@media (max-width: 900px)': {
-      fontSize: "14px"
-    }
+    fontSize: 16,
+
   },
   forgotPassword: {
-    fontSize: "13px",
+    fontSize: 14,
+    fontWeight: 500,
     color: "#2196f3",
     position: "absolute",
-    right: "3%",
-    bottom: "36%",
-    zIndex: "10",
+    right: "1%",
+    bottom: "40%",
+    zIndex: 10,
     '&:hover': {
       cursor: "pointer"
     }
@@ -259,17 +157,11 @@ const useStyles = makeStyles(() => ({
   passwordInput: {
     position: "relative",
     padding: "0px 4px",
-    fontSize: "30px",
-    '@media (max-width: 900px)': {
-      fontSize: "24px"
-    }
+    fontSize: 30,
   },
-  loginBtn: {
+  submitBtn: {
     margin: "20px auto",
     padding: "14px 72px",
-    '@media (max-width:900px)': {
-      padding: "8px 41px",
-    }
   }
 }));
 
@@ -294,17 +186,17 @@ const Login = (props) => {
   return (
     <Grid className={classes.root} container>
       <Box className={classes.colorFilter}>
-        <img className={classes.bgImg} src={bgImg} alt="backgroundImage"></img>
+        <img className={classes.bgImg} src={bgImg} alt="backgroundImage" />
         <div className={classes.sloganContainer}>
-          <img className={classes.bubbleImg} src={bubble} alt="bubbleImage"></img>
+          <img className={classes.bubbleImg} src={bubble} alt="bubbleImage" />
           <Typography className={classes.slogan}>Converse with anyone<br></br> with any language</Typography> 
         </div>
       </Box>
-      <Box className={classes.loginContainer}>
-        <Grid container item className={classes.registerContainer}>
-          <Typography className={classes.registerHeader}>Don't have an account?</Typography>
+      <Box className={classes.mainContainer}>
+        <Grid container item className={classes.topContainer}>
+          <Typography className={classes.topHeader}>Don't have an account?</Typography>
           <Button 
-            className={classes.registerBtn}
+            className={classes.topBtn}
             onClick={() => history.push("/register")}
             variant="contained"
             >
@@ -312,7 +204,7 @@ const Login = (props) => {
           </Button>
         </Grid>
         <form className={classes.form} onSubmit={handleLogin}>
-          <Typography className={classes.loginHeaderContainer}><Typography className={classes.loginHeader} component="span">Welcome back!</Typography></Typography>
+          <Typography className={classes.headerContainer}><Typography className={classes.header} component="span">Welcome back!</Typography></Typography>
           <Grid className={classes.inputContainer}>
             <Grid className={classes.inputItemContainer}>
               <FormControl className={classes.inputItemContainer}>
@@ -351,7 +243,7 @@ const Login = (props) => {
                 />
               </FormControl>
             </Grid>
-            <Button className={classes.loginBtn} type="submit" variant="contained" size="large" color="primary">
+            <Button className={classes.submitBtn} type="submit" variant="contained" size="large" color="primary">
               Login
             </Button>
           </Grid>
