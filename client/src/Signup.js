@@ -12,9 +12,9 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { register } from "./store/utils/thunkCreators";
+import { useStyles as useSharedStyles } from "./sharedStyles";
 import bgImg from "./images/bg-img.png";
 import bubble from "./images/bubble.svg";
-import {useStyles as useSharedStyles} from "./Login";
 
 const useStyles = makeStyles(() => ({
   topBtn: {
