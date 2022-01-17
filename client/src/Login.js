@@ -5,13 +5,18 @@ import {
   Grid,
   Box,
   Typography,
+  Link,
   Button,
   FormControl,
   TextField,
 } from "@material-ui/core";
 import { login } from "./store/utils/thunkCreators";
+import { useStyles as useSharedStyles } from "./sharedStyles";
+import bgImg from "./images/bg-img.png";
+import bubble from "./images/bubble.svg";
 
 const Login = (props) => {
+  const classes = useSharedStyles();
   const history = useHistory();
   const { user, login } = props;
 
@@ -28,37 +33,68 @@ const Login = (props) => {
   }
 
   return (
-    <Grid container justify="center">
-      <Box>
-        <Grid container item>
-          <Typography>Need to register?</Typography>
-          <Button onClick={() => history.push("/register")}>Register</Button>
+    <Grid className={classes.root} container>
+      <Box className={classes.colorFilter}>
+        <img className={classes.bgImg} src={bgImg} alt="backgroundImage" />
+        <Box className={classes.sloganContainer}>
+          <img className={classes.bubbleImg} src={bubble} alt="bubbleImage" />
+          <Typography className={classes.slogan}>Converse with anyone<br></br> with any language</Typography> 
+        </Box>
+      </Box>
+      <Box className={classes.mainContainer}>
+        <Grid container item className={classes.topContainer}>
+          <Typography className={classes.topHeader}>Don't have an account?</Typography>
+          <Button 
+            className={classes.topBtn}
+            onClick={() => history.push("/register")}
+            variant="contained"
+            >
+              Create Account
+          </Button>
         </Grid>
-        <form onSubmit={handleLogin}>
-          <Grid>
-            <Grid>
-              <FormControl margin="normal" required>
+        <form className={classes.form} onSubmit={handleLogin}>
+          <Typography className={classes.headerContainer}><Typography className={classes.header} component="span">Welcome back!</Typography></Typography>
+          <Grid className={classes.inputContainer}>
+            <Grid className={classes.inputItemContainer}>
+              <FormControl className={classes.inputItemContainer}>
                 <TextField
+                  InputLabelProps={{ required: false }}
+                  className={classes.textField}
+                  InputProps={{
+                    classes: {
+                      input: classes.textInput,
+                    },
+                  }}
                   aria-label="username"
                   label="Username"
                   name="username"
                   type="text"
+                  required
                 />
               </FormControl>
             </Grid>
-            <FormControl margin="normal" required>
-              <TextField
-                label="password"
-                aria-label="password"
-                type="password"
-                name="password"
-              />
-            </FormControl>
-            <Grid>
-              <Button type="submit" variant="contained" size="large">
-                Login
-              </Button>
+            <Grid className={classes.inputItemContainer}>
+              <FormControl className={classes.inputItemContainer}>
+                <Link className={classes.forgotPassword}>Forgot?</Link>
+                <TextField
+                  InputLabelProps={{ required: false }}
+                  className={classes.textField}
+                  InputProps={{
+                    classes: {
+                      input: classes.passwordInput,
+                    },
+                  }}
+                  label="Password"
+                  aria-label="password"
+                  type="password"
+                  name="password"
+                  required
+                />
+              </FormControl>
             </Grid>
+            <Button className={classes.submitBtn} type="submit" variant="contained" size="large" color="primary">
+              Login
+            </Button>
           </Grid>
         </form>
       </Box>
