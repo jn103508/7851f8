@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import { 
   FormControl, 
   FilledInput, 
@@ -7,12 +8,14 @@ import {
   DialogContent,
   Container,
   Button,
-  Grid
+  Grid,
+  Box
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
-import imageIcon from "../../images/image-regular.svg";
+import selectIcon from "../../images/select-multiple.png";
+import smileIcon from "../../images/smile-regular.svg";
 import Image from './Image';
 
 const useStyles = makeStyles(() => ({
@@ -33,23 +36,23 @@ const useStyles = makeStyles(() => ({
     height: 70,
     width: "90%",
     backgroundColor: "#F4F6FA",
-    borderRadius: "8px 0 0 8px"
+    borderRadius: 8
   },
   imageIconContainer: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: "10%",
+    width: 65,
     height: "100%",
-    borderRadius: "0 8px 8px 0",
+    borderRadius: 8,
     '&:hover': {
       cursor: "pointer",
       backgroundColor: "#D4D6DA"
     }
   },
   imageIcon: {
-    width: "30px",
-    opacity: "0.4"
+    width: 30,
+    opacity: .15
   },
   dialogContainer: {
     '& .MuiPaper-root': {
@@ -132,22 +135,22 @@ const Input = (props) => {
     setSelectedAttachments([...selectedAttachments, ...event.target.files]);
   }
 
-  const handleUpload = () => {
-    const url = "https://api.cloudinary.com/v1_1/hatchway-images/image/upload";  
+  const handleUpload = async () => {
+    const url = process.env.REACT_APP_API_URL;  
+
     const promises = selectedAttachments.map(async attachment => {
       const formData = new FormData();
       formData.append("file", attachment);
       formData.append("upload_preset", "rhbvvbla");
-      const response = await fetch(url, {
-        method: "POST",
-        body: formData
-      });
-      const data = await response.json();
-      return data.url;
+      
+      const Axios = axios.create();
+      delete Axios.defaults.headers.common["Authorization"];
+      const response = await Axios.post(url, formData);
+      return response.data.url;
     });
-    Promise.all(promises).then(url => {
-      setAttachments([...attachments, ...url]);
-    })
+
+    const urls = await Promise.all(promises);
+    setAttachments([...attachments, ...urls])
     setSelectedAttachments([]);
   }
 
@@ -199,7 +202,8 @@ const Input = (props) => {
           name="text"
           onChange={handleChange}
         />
-        <div onClick={handleOpen} className={classes.imageIconContainer}><img className={classes.imageIcon} src={imageIcon} alt="ImageIcon"></img></div>
+        <Box className={classes.imageIconContainer}><img className={classes.imageIcon} src={smileIcon} alt="SmileIcon"/></Box>
+        <Box onClick={handleOpen} className={classes.imageIconContainer}><img className={classes.imageIcon} src={selectIcon} alt="SelectIcon"/></Box>
       </FormControl>
     </form>
   );
