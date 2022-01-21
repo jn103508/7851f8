@@ -38,7 +38,7 @@ const SenderBubble = (props) => {
   return (
     <Box className={classes.root}>
       <Typography className={classes.date}>{time}</Typography>
-      {attachments !== null && attachments.length > 0 && <ImageBubble attachments={attachments} text={text} user="sender" amount={attachments.length} />}
+      {attachments?.length > 0 && <ImageBubble attachments={attachments} text={text} user="sender" amount={attachments.length} />}
       <Box className={classes.bubble}>
         <Typography className={text && classes.text}>{text}</Typography>
       </Box>
