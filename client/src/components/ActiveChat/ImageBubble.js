@@ -3,14 +3,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Box, Dialog } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
-  image: props => ({
-    margin: props.user === 'sender' 
-      ? "0 0 0 10px"
-      : "0 10px 0 0", 
+  image: (props) => ({
+    margin: props.user === "sender" ? "0 0 0 10px" : "0 10px 0 0",
     height: "200px",
-    borderRadius: props.amount === 1 && props.text.length
-      ? "10px 10px 0px 0px"
-      : "10px 10px 0 10px",
+    borderRadius:
+      props.amount === 1 && props.text.length
+        ? "10px 10px 0px 0px"
+        : "10px 10px 0 10px",
     cursor: "pointer",
   }),
   imageWithNoMessage: {
@@ -48,7 +47,7 @@ const ImageBubble = (props) => {
           />
         ))}
       <Dialog open={imageOpen} onClose={handleClose}>
-        <img src={clickedImage} alt="focusedImage"/>
+        <img src={clickedImage} alt="focusedImage" />
       </Dialog>
     </Box>
   );
