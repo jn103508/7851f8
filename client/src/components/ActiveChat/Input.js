@@ -1,27 +1,27 @@
 import React, { useState } from "react";
-import axios from 'axios';
-import { 
-  FormControl, 
-  FilledInput, 
-  Dialog, 
+import axios from "axios";
+import {
+  FormControl,
+  FilledInput,
+  Dialog,
   DialogTitle,
   DialogContent,
   Container,
   Button,
   Grid,
-  Box
+  Box,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
 import selectIcon from "../../images/select-multiple.png";
 import smileIcon from "../../images/smile-regular.svg";
-import Image from './Image';
+import Image from "./Image";
 
 const useStyles = makeStyles(() => ({
   root: {
     justifySelf: "flex-end",
-    marginTop: 15
+    marginTop: 15,
   },
   inputContainer: {
     display: "flex",
@@ -36,7 +36,7 @@ const useStyles = makeStyles(() => ({
     height: 70,
     width: "90%",
     backgroundColor: "#F4F6FA",
-    borderRadius: 8
+    borderRadius: 8,
   },
   imageIconContainer: {
     display: "flex",
@@ -45,49 +45,49 @@ const useStyles = makeStyles(() => ({
     width: 65,
     height: "100%",
     borderRadius: 8,
-    '&:hover': {
+    "&:hover": {
       cursor: "pointer",
-      backgroundColor: "#D4D6DA"
-    }
+      backgroundColor: "#D4D6DA",
+    },
   },
   imageIcon: {
     width: 30,
-    opacity: .15
+    opacity: 0.15,
   },
   dialogContainer: {
-    '& .MuiPaper-root': {
-      width: "60vw"
-    }
+    "& .MuiPaper-root": {
+      width: "60vw",
+    },
   },
   container: {
     padding: 0,
-    color: "#a6a6a6"
+    color: "#a6a6a6",
   },
   selectedImagesContainer: {
     maxHeight: "20vh",
-    overflowY: "auto"
+    overflowY: "auto",
   },
-  uploadedImagesTitle : {
-    paddingLeft: 0
+  uploadedImagesTitle: {
+    paddingLeft: 0,
   },
   uploadedImages: {
-    height: 70
+    height: 70,
   },
   btnContainer: {
-    marginTop: 22
+    marginTop: 22,
   },
   selectBtn: {
     backgroundColor: "white",
     boxShadow: "0px 4px 6px rgba(20,20,150,.1)",
     color: "#2196f3",
     padding: "10px 0",
-    '&:hover': {
-      backgroundColor: "#f7f7f7"
+    "&:hover": {
+      backgroundColor: "#f7f7f7",
     },
   },
   uploadBtn: {
-    padding: "10px 0"
-  }
+    padding: "10px 0",
+  },
 }));
 
 const Input = (props) => {
@@ -110,66 +110,101 @@ const Input = (props) => {
       recipientId: otherUser.id,
       conversationId,
       sender: conversationId ? null : user,
-      attachments: attachments
+      attachments: attachments,
     };
     await postMessage(reqBody);
     setText("");
     setAttachments([]);
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  }
-
-  const handleOpen = () => {
-    setOpen(true);
-  }
-
+  const handleToggle = () => {
+    setOpen(!open);
+  };
   const handleSelectedImageDelete = (index) => {
     const copySelectedAttachments = [...selectedAttachments];
     copySelectedAttachments.splice(index, 1);
     setSelectedAttachments(copySelectedAttachments);
-  }
+  };
 
-  const handleSelectedFile = event => {
+  const handleSelectedFile = (event) => {
     setSelectedAttachments([...selectedAttachments, ...event.target.files]);
-  }
+  };
 
   const handleUpload = async () => {
-    const url = process.env.REACT_APP_API_URL;  
-
-    const promises = selectedAttachments.map(async attachment => {
+    const url = process.env.REACT_APP_API_URL;
+    const uploadPreset = process.env.REACT_APP_UPLOAD_PRESET;
+    const promises = selectedAttachments.map(async (attachment) => {
       const formData = new FormData();
       formData.append("file", attachment);
-      formData.append("upload_preset", "rhbvvbla");
-      
-      const Axios = axios.create();
-      delete Axios.defaults.headers.common["Authorization"];
-      const response = await Axios.post(url, formData);
+      formData.append("upload_preset", uploadPreset);
+
+      const response = await axios.post(url, formData, {
+        transformRequest: [
+          (data, headers) => {
+            delete headers["x-access-token"];
+            return data;
+          },
+        ],
+      });
+
       return response.data.url;
     });
-
     const urls = await Promise.all(promises);
-    setAttachments([...attachments, ...urls])
+    setAttachments([...attachments, ...urls]);
     setSelectedAttachments([]);
-  }
+  };
 
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
       <FormControl className={classes.inputContainer} fullWidth hiddenLabel>
-        <Dialog className={classes.dialogContainer} open={open} onClose={handleClose}>
+        <Dialog
+          className={classes.dialogContainer}
+          open={open}
+          onClose={handleToggle}
+        >
           <DialogTitle>Selected Images</DialogTitle>
           <DialogContent className={classes.dialogContentContainer}>
             <Container className={classes.container}>
-              {selectedAttachments.length ? <Grid container className={classes.selectedImagesContainer}>{selectedAttachments.map((attachment, index) => (
-                <Image key={index} onDelete={handleSelectedImageDelete} index={index} image={attachment} />))}</Grid> 
-              : "Please select an image to upload."}
+              {selectedAttachments.length ? (
+                <Grid container className={classes.selectedImagesContainer}>
+                  {selectedAttachments.map((attachment, index) => (
+                    <Image
+                      key={index}
+                      onDelete={handleSelectedImageDelete}
+                      index={index}
+                      image={attachment}
+                    />
+                  ))}
+                </Grid>
+              ) : (
+                "Please select an image to upload."
+              )}
             </Container>
-            {attachments.length ? <DialogTitle className={classes.uploadedImagesTitle}>Uploaded Images</DialogTitle> : ""}
+            {attachments.length > 0 && (
+              <DialogTitle className={classes.uploadedImagesTitle}>
+                Uploaded Images
+              </DialogTitle>
+            )}
             <Container className={classes.container}>
-              {attachments.length ? <Grid spacing={2} container className={classes.selectedImagesContainer}>{attachments.map((attachment, index) => (
-                <Grid key={index} item><img className={classes.uploadedImages} src={attachment} alt="uploadedImage"/></Grid>))}</Grid> 
-              : ""}
+              {attachments.length ? (
+                <Grid
+                  spacing={2}
+                  container
+                  className={classes.selectedImagesContainer}
+                >
+                  {attachments.map((attachment, index) => (
+                    <Grid key={index} item>
+                      <img
+                        className={classes.uploadedImages}
+                        src={attachment}
+                        alt="uploadedImage"
+                      />
+                    </Grid>
+                  ))}
+                </Grid>
+              ) : (
+                ""
+              )}
             </Container>
             <Grid className={classes.btnContainer} container spacing={2}>
               <Grid item xs={6}>
@@ -183,16 +218,29 @@ const Input = (props) => {
                   type="file"
                 />
                 <label htmlFor="raisedButtonFile">
-                  <Button fullWidth variant="contained" component="span" className={classes.selectBtn}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    component="span"
+                    className={classes.selectBtn}
+                  >
                     Select
                   </Button>
-                </label> 
+                </label>
               </Grid>
               <Grid item xs={6}>
-                <Button fullWidth variant="contained" onClick={handleUpload} color="primary" className={classes.uploadBtn}>Upload</Button>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  onClick={handleUpload}
+                  color="primary"
+                  className={classes.uploadBtn}
+                >
+                  Upload
+                </Button>
               </Grid>
             </Grid>
-        </DialogContent>
+          </DialogContent>
         </Dialog>
         <FilledInput
           classes={{ root: classes.input }}
@@ -202,8 +250,16 @@ const Input = (props) => {
           name="text"
           onChange={handleChange}
         />
-        <Box className={classes.imageIconContainer}><img className={classes.imageIcon} src={smileIcon} alt="SmileIcon"/></Box>
-        <Box onClick={handleOpen} className={classes.imageIconContainer}><img className={classes.imageIcon} src={selectIcon} alt="SelectIcon"/></Box>
+        <Box className={classes.imageIconContainer}>
+          <img className={classes.imageIcon} src={smileIcon} alt="SmileIcon" />
+        </Box>
+        <Box onClick={handleToggle} className={classes.imageIconContainer}>
+          <img
+            className={classes.imageIcon}
+            src={selectIcon}
+            alt="SelectIcon"
+          />
+        </Box>
       </FormControl>
     </form>
   );
@@ -218,3 +274,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(null, mapDispatchToProps)(Input);
+
+
